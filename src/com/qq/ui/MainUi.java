@@ -33,58 +33,16 @@ public class MainUi extends JFrame {
 	private JPanel panel;
 	private ChatUI chatUI;
 
-	// string->account窗口
+	// string->account 窗口
 	private Map<String, ChatUI> chats = new HashMap<String, ChatUI>();
 
 	private Socket socket; // 连接到当前socket
-	// private JLabel fimg[]; //好友头像
 
-	/**
-	 * Launch the application.
-	 * 
-	 * 
-	 * /** Create the frame.
-	 * 
-	 * 
-	 */
 	/*
 	 * 添加新好友
 	 */
 
-	private void initFriends() {
-		List<User> list = user.getFriends();
-		for (User fuser : list) {
-
-			JLabel fimg = new JLabel();
-			fimg.setIcon(new ImageIcon(MainUi.class.getResource("/img/headImage/" + user.getImg() + ".JPG")));
-			fimg.setToolTipText(fuser.getAccount());
-			fimg.setText(fuser.getNickname());
-
-			System.out.println("头像" + fuser.getImg());
-			System.out.println("昵称" + fuser.getNickname());
-			// 加点击事件
-			fimg.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent event) {
-					super.mouseClicked(event);
-					if (event.getClickCount() == 2) {
-						// 鼠标双击
-
-						ChatUI chatUI = chats.get(fuser.getAccount());
-						if (chatUI == null) {
-							// 第一次显示
-							chatUI = new ChatUI(fuser, user, socket);
-							chatUI.setLocationRelativeTo(null);
-							chatUI.setVisible(true);
-							chatUI.setTitle(fuser.getNickname());
-							// 把新建的窗口放置到map
-							chats.put(fuser.getAccount(), chatUI);
-						}
-					}
-				}
-			});
-			panel.add(fimg);
-		}
-	}
+	
 
 	public MainUi(User user, Socket socket) {
 		this.socket = socket;
@@ -135,6 +93,42 @@ public class MainUi extends JFrame {
 		;
 	}
 
+	private void initFriends() {
+		List<User> list = user.getFriends();
+		for (User fuser : list) {
+
+			JLabel fimg = new JLabel();
+			fimg.setIcon(new ImageIcon(MainUi.class.getResource("/img/headImage/" + fuser.getImg() + ".JPG")));
+			fimg.setToolTipText(fuser.getAccount());
+			fimg.setText(fuser.getNickname());
+
+			// 加点击事件
+			fimg.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent event) {
+					super.mouseClicked(event);
+					if (event.getClickCount() == 2) {
+						// 鼠标双击
+
+						ChatUI chatUI = chats.get(fuser.getAccount());
+						if (chatUI == null) {
+							// 第一次显示
+							chatUI = new ChatUI(fuser, user, socket);
+							chatUI.setLocationRelativeTo(null);
+							chatUI.setVisible(true);
+							chatUI.setTitle(fuser.getNickname());
+							// 把新建的窗口放置到map
+							chats.put(fuser.getAccount(), chatUI);
+						} else {
+							// 已经存在窗口
+							chatUI.setVisible(true);
+						}
+					}
+				}
+			});
+			panel.add(fimg);
+		}
+	}
+	
 	/*
 	 * 添加新好友头像
 	 */
@@ -143,6 +137,7 @@ public class MainUi extends JFrame {
 		JLabel fimg = new JLabel();
 		fimg.setIcon(
 				new ImageIcon(getClass().getClassLoader().getResource("/img/headImage/" + fUser.getImg() + ".JPG")));
+
 		fimg.setToolTipText(fUser.getAccount());
 		fimg.setText(fUser.getNickname());
 		fimg.addMouseListener(new MouseAdapter() {
@@ -179,29 +174,31 @@ public class MainUi extends JFrame {
 		// 消息显示
 
 		// 显示消息到聊天窗口
-		ChatUI cj = chats.get(msg.getFrom().getAccount());
+		/*ChatUI cj = chats.get(msg.getFrom().getAccount());
 		if (cj == null) {
 			cj = new ChatUI(msg.getFrom(), user, socket);
 			cj.setLocationRelativeTo(null);
 			chats.put(msg.getFrom().getAccount(), cj);
 		}
 		cj.appendMsg(msg);
-		if (!cj.isVisible()) {
-			//如果窗口不可见，跳动头像
+		if (!cj.isVisible()) {*/
+			// 如果窗口不可见，跳动头像
 			Component[] imgs = panel.getComponents();
 			System.out.println("数量" + imgs.length);
 			for (Component c : imgs) {
 				System.out.println("c is" + c);
 				JLabel label = (JLabel) c;
 				if (label.getToolTipText().equals(msg.getFrom().getAccount())) {
-					// 找到对应头像
-					label.setIcon(new ImageIcon(
-							getClass().getClassLoader().getResource("img/headImg/" + 1 + ".jpg")));
+					// 找到对应头像】
+					label.setIcon(new ImageIcon(getClass()
+							.getClassLoader()
+							.getResource("img/headImg/" +6+ ".JPG")));
 					break;
-				}
+//				}
 
 			}
 		}
 
 	}
+	
 }

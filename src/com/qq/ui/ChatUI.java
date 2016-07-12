@@ -20,14 +20,15 @@ import com.qq.User;
 import com.qq.biz.Userbiz;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class ChatUI extends JFrame {
 
 	private JPanel contentPane;
 
-	JTextArea textArea;
-
 	JTextArea textArea_1;
+	JTextArea textArea;
 
 	Userbiz userbiz;
 
@@ -79,15 +80,6 @@ public class ChatUI extends JFrame {
 		lblNewLabel_1.setBounds(319, 317, 159, 270);
 		contentPane.add(lblNewLabel_1);
 
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(10, 10, 294, 277);
-		contentPane.add(textArea);
-
-		textArea_1 = new JTextArea();
-		textArea_1.setBounds(10, 317, 288, 272);
-		contentPane.add(textArea_1);
-
 		JButton button = new JButton("\u53D1\u9001");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -106,6 +98,20 @@ public class ChatUI extends JFrame {
 		});
 		button_1.setBounds(303, 617, 93, 23);
 		contentPane.add(button_1);
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(10, 317, 300, 270);
+				contentPane.add(scrollPane);
+				
+						textArea_1 = new JTextArea();
+						scrollPane.setViewportView(textArea_1);
+						
+						JScrollPane scrollPane_1 = new JScrollPane();
+						scrollPane_1.setBounds(10, 10, 299, 290);
+						contentPane.add(scrollPane_1);
+						
+						 textArea = new JTextArea();
+						scrollPane_1.setViewportView(textArea);
 	}
 
 	private void sendMsg() {

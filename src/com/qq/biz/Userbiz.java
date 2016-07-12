@@ -29,6 +29,6 @@ public void sengMsg(SendMsg sendMsg) throws IOException{
  * 显示好友信息
  */
 public void showMsg(SendMsg msg,MainUi mainUi ){
-	mainUi.tip(msg);
+	mainUi.tip(msg);   //显示消息
 }
 }
